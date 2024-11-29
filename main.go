@@ -2,6 +2,8 @@ package main
 
 import (
 	"checkin/handlers"
+	"fmt"
+	"os"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,5 +23,10 @@ func main() {
 	// Nothing
 	e.GET("/report", handlers.GetReport)
 
-	e.Logger.Fatal(e.Start("127.0.0.1:6969"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "10000"
+	}
+
+	e.Logger.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%s", port)))
 }
