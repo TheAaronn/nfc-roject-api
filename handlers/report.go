@@ -23,7 +23,7 @@ func GetReport(c echo.Context) error {
 	defer db.Close()
 
 	// Query all logs (only name and lastCheckin)
-	rows, err := db.Query("SELECT nombre, date FROM checkinLog JOIN user ON checkinLog.userID = user.id")
+	rows, err := db.Query("SELECT user.nombre, checkinLog.date FROM checkinLog JOIN card ON checkinLog.idTarjeta = card.id JOIN user ON card.userID = user.id")
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, utils.JSON{"error": err.Error()})
 	}
@@ -45,7 +45,7 @@ func GetReport(c echo.Context) error {
 	// Instead of writing one log by one log, write them all at once
 	writer.WriteAll(logs)
 	if err := writer.Error(); err != nil {
-		return c.JSON(http.StatusInternalServerError, utils.JSON{"Error": "Error writing to csv report"})
+		return c.JSON(http.StatusInternalServerError, utils.JSON{"error": "Error writing to csv report"})
 	}
 	// Close file to be able to save the changes before serving it to client
 	if err := report.Close(); err != nil {
