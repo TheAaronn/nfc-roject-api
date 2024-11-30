@@ -23,6 +23,7 @@ func main() {
 	// Nothing
 	e.GET("/report", handlers.GetReport)
 
+	e.GET("/ping", handlers.Ping)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "10000"
