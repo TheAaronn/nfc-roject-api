@@ -16,7 +16,7 @@ func Checkin(UUID []byte) error {
 	err := db.QueryRow("SELECT id FROM card WHERE UUID = ?", UUID).Scan(&cardID)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return errors.New("card not found")
+			return errors.New("card not found in db")
 		}
 		return err
 	}

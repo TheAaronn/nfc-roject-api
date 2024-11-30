@@ -25,7 +25,7 @@ func GetReport(c echo.Context) error {
 	// Query all logs (only name and lastCheckin)
 	rows, err := db.Query("SELECT nombre, date FROM checkinLog JOIN user ON checkinLog.userID = user.id")
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, utils.JSON{"error": "Failed to query database"})
+		return c.JSON(http.StatusInternalServerError, utils.JSON{"error": err.Error()})
 	}
 	defer rows.Close()
 
